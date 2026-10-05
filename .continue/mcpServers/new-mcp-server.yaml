@@ -1,0 +1,11 @@
+"mcpServers": {
+  "jira-atlassian": {
+    "command": "npx",
+    "args": ["-y", "@atlassian/mcp-server-jira"],
+    "env": {
+      "JIRA_URL": "https://jamescreiddev-1791222721165.atlassian.net",
+      "JIRA_API_TOKEN": "ATATT3xFfGF0UIDloitJkb5CJVrTysPrWVD8F8H9QoV7wCbEsx6Ar63WnVsiV77BeoLZ5EuILAR6rN-HlO1-dpJiByGXdOn_U21sBEp2Gty-VkNmU_-Qp5nngiGWjBPiib02a6V-u9psf5m6kTIzWsdH8kcgff8x2uhWiVfV79H03qGqto3PsGg=10E427F5",
+      "JIRA_USER_EMAIL": "jamescreid.dev@gmail.com"
+    }
+  }
+}
