@@ -1,0 +1,96 @@
+# stories.yaml - Derive from SPEC.md via bmad-spec Story Breakdown.
+# This file is for story dispatch, not in the companions list.
+# See assets/stories-schema.md for field definitions and validity rules.
+---
+spec_id: SPEC-warranty-shield-mvp
+created: 2026-10-05T16:00
+updated: 2026-10-05T16:00
+
+stories:
+  - id: ST-001
+    capability: CAP-1
+    title: Manual Warranty Entry Form
+    description: Build a fast, mobile-optimized form that captures product name, purchase date, warranty duration, retailer, and price. Users should complete entry in under 30 seconds.
+    spec_checkpoint: Form renders on a single screen; all 5 fields visible; save button prominent.
+    done_checkpoint: A test user enters a warranty for Samsung Refrigerator purchased 2026-01-15 2-year warranty Best Buy 1200 dollars and saves it in under 30 seconds on both iOS and Android devices.
+    invoke_dev_with: Use form validation libraries; consider auto-detecting date formats; support keyboard navigation.
+
+  - id: ST-002
+    capability: CAP-1
+    title: Warranty Data Model and Storage
+    description: Design and implement the backend data model for warranty entries including all fields (product name, purchase date, warranty duration, retailer, price, expiration date) and the ability to calculate expiration dates from purchase date plus warranty duration.
+    spec_checkpoint: Database schema supports all 6 fields; expiration date is computed automatically.
+    done_checkpoint: Creating a warranty with purchase date 2026-01-15 and 24-month duration correctly sets expiration date to 2028-01-15. Query by retailer, by expiration date, or by product name returns correct results.
+    invoke_dev_with: Consider using a relational database (PostgreSQL) for structured warranty data; compute expiration_date on insert and update.
+
+  - id: ST-003
+    capability: CAP-2
+    title: Smart Expiration Notification Engine
+    description: Implement a notification engine that checks all user warranties daily and triggers push and email notifications when a warranty reaches a configured threshold (90, 60, 30, 7 days).
+    spec_checkpoint: Notification scheduler runs daily; configurable thresholds stored per user; notifications fire within 1 minute of threshold crossing.
+    done_checkpoint: A warranty with 30 days remaining triggers both a push notification (delivered within 60 seconds) and an email (received within 5 minutes) containing: product name, expiration date, and a deep link to the warranty detail view.
+    invoke_dev_with: Use APNs for iOS, FCM for Android; schedule daily cron job; store user notification preferences (enabled thresholds per warranty).
+
+  - id: ST-004
+    capability: CAP-2
+    title: Notification Preferences UI
+    description: Build a user-facing settings screen where users can configure which notification thresholds they want for each warranty (toggle 90, 60, 30, 7 days on or off).
+    spec_checkpoint: Settings screen shows all 4 thresholds as toggle switches; changes persist immediately.
+    done_checkpoint: User toggles off 90-day and 60-day for a specific warranty; no notifications are sent at those thresholds; 30-day and 7-day notifications still fire correctly.
+    invoke_dev_with: Store preferences in user profile; allow per-warranty overrides; default is all thresholds enabled.
+
+  - id: ST-005
+    capability: CAP-3
+    title: Color-Coded Warranty Dashboard
+    description: Build the main dashboard screen that displays all user warranties sorted by urgency with color coding: green (safe >60 days), yellow (expiring 30-60 days), red (critical <30 days or expired).
+    spec_checkpoint: Dashboard loads all warranties; color coding applied correctly; sorted by urgency (most urgent first).
+    done_checkpoint: A user with 3 green, 2 yellow, and 1 red warranty sees them sorted with the red warranty at the top; tapping any warranty navigates to its detail view.
+    invoke_dev_with: Color scheme: green #4CAF50, yellow #FFC107, red #F44336. Include a summary bar: X active, Y expiring, Z expired.
+
+  - id: ST-006
+    capability: CAP-3
+    title: Warranty Detail View
+    description: Build a detail screen for individual warranties showing all fields, attached documents, notification status, and a File Claim info button (links to retailer claim page).
+    spec_checkpoint: Detail view shows all 6 warranty fields, attached documents list, expiration countdown, and retailer claim link.
+    done_checkpoint: User views a warranty detail: all fields displayed, 3 attached PDFs visible and downloadable, expiration countdown shows 14 days remaining, retailer claim page link opens in browser.
+    invoke_dev_with: Include an Edit button; show a visual progress bar for warranty life remaining.
+
+  - id: ST-007
+    capability: CAP-4
+    title: Email Purchase Confirmation Parser
+    description: Build an email parser that scans a user inbox for purchase confirmation emails from major retailers (Amazon, Best Buy, Apple, Walmart) and extracts product name, purchase date, warranty duration, and retailer name using regex or heuristics.
+    spec_checkpoint: Parser handles at least 4 major retailers; achieves 80%+ extraction accuracy on test emails.
+    done_checkpoint: Given 20 sample purchase confirmation emails (5 per retailer), the parser correctly extracts product name, purchase date, and warranty duration in at least 16 of 20 cases (80% accuracy).
+    invoke_dev_with: Use regex-based pattern matching; handle common email formats; create a retailer-specific parser registry; gracefully handle unparseable emails by showing raw content for manual entry.
+
+  - id: ST-008
+    capability: CAP-4
+    title: Email Grant and Draft Creation Flow
+    description: Build the UI and UX flow for users to grant email access, review parsed warranty drafts, and confirm or edit them before saving to their warranty list.
+    spec_checkpoint: User grants email permission; sees a list of parsed warranty drafts; can edit or confirm each.
+    done_checkpoint: User grants email access; sees 5 parsed warranty drafts with pre-filled fields; edits one (changes product name); confirms all 5; all appear in their warranty dashboard.
+    invoke_dev_with: Show a preview card for each parsed email; allow manual field editing; provide Import All and Import Selected buttons; show a Skip option for false positives.
+
+  - id: ST-009
+    capability: CAP-5
+    title: Document Attachment System
+    description: Build the ability for users to attach PDFs (up to 10MB) and images (up to 5MB each) to any warranty entry, with searchable access from the warranty detail view.
+    spec_checkpoint: Upload flow works for PDFs and images; files stored in cloud storage; searchable from warranty detail.
+    done_checkpoint: User attaches 3 files (1 PDF receipt, 2 photos of warranty cards) to a warranty; all 3 appear in the warranty detail view; searching by filename or content returns the correct warranty.
+    invoke_dev_with: Use cloud storage (AWS S3, Firebase Storage); implement file type validation; show thumbnails for images; PDF preview capability.
+
+  - id: ST-010
+    capability: CAP-6
+    title: User Authentication and Account Management
+    description: Implement user registration, login, password recovery, and OAuth (Google or Apple sign-in) with cloud-synced data.
+    spec_checkpoint: Users can register, log in, log out, and recover passwords; OAuth available as alternative.
+    done_checkpoint: User creates account with email and password; logs out; logs in on a different device; all 5 warranties and attachments are available within 60 seconds. OAuth sign-in via Google also works.
+    invoke_dev_with: Use Firebase Auth or Auth0; support email and password plus Google OAuth plus Apple Sign-In; implement password reset via email link.
+
+  - id: ST-011
+    capability: CAP-6
+    title: Cloud Data Sync Across Devices
+    description: Implement real-time cloud sync so warranty data, settings, and attachments are available on any device within 60 seconds of being added or modified.
+    spec_checkpoint: Changes on Device A appear on Device B within 60 seconds; conflict resolution handles simultaneous edits.
+    done_checkpoint: User adds a warranty on Device A; opens Device B within 60 seconds; the new warranty appears in the dashboard. User edits warranty on both devices simultaneously; last-write-wins resolution applies without data loss.
+    invoke_dev_with: Use Firebase Realtime Database or Firestore for real-time sync; implement optimistic UI updates; handle offline queue for when network is unavailable.
