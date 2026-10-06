@@ -16,6 +16,14 @@ Thumbs.db
 *.seed
 *.lastBuildCache
 *.specCache
+mobile/.dart_tool/
+pubspec.lock
+
+# Mobile platform-specific directories (Android, iOS, Linux, Windows)
+mobile/android/
+mobile/ios/
+mobile/linux/
+mobile/windows/
 
 # Java
 *.log
