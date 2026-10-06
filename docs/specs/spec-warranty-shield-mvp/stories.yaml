@@ -4,7 +4,8 @@
 ---
 spec_id: SPEC-warranty-shield-mvp
 created: 2026-10-05T16:00
-updated: 2026-10-05T16:00
+updated: 2026-10-05T23:45
+sprint_completed: Sprint 1 (2026-10-05)
 
 stories:
   - id: ST-001
@@ -14,6 +15,9 @@ stories:
     spec_checkpoint: Form renders on a single screen; all 5 fields visible; save button prominent.
     done_checkpoint: A test user enters a warranty for Samsung Refrigerator purchased 2026-01-15 2-year warranty Best Buy 1200 dollars and saves it in under 30 seconds on both iOS and Android devices.
     invoke_dev_with: Use form validation libraries; consider auto-detecting date formats; support keyboard navigation.
+    status: completed
+    completed_date: 2026-10-05
+    sprint: Sprint 1
 
   - id: ST-002
     capability: CAP-1
@@ -22,6 +26,9 @@ stories:
     spec_checkpoint: Database schema supports all 6 fields; expiration date is computed automatically.
     done_checkpoint: Creating a warranty with purchase date 2026-01-15 and 24-month duration correctly sets expiration date to 2028-01-15. Query by retailer, by expiration date, or by product name returns correct results.
     invoke_dev_with: Consider using a relational database (PostgreSQL) for structured warranty data; compute expiration_date on insert and update.
+    status: completed
+    completed_date: 2026-10-05
+    sprint: Sprint 1
 
   - id: ST-003
     capability: CAP-2
@@ -30,6 +37,8 @@ stories:
     spec_checkpoint: Notification scheduler runs daily; configurable thresholds stored per user; notifications fire within 1 minute of threshold crossing.
     done_checkpoint: A warranty with 30 days remaining triggers both a push notification (delivered within 60 seconds) and an email (received within 5 minutes) containing: product name, expiration date, and a deep link to the warranty detail view.
     invoke_dev_with: Use APNs for iOS, FCM for Android; schedule daily cron job; store user notification preferences (enabled thresholds per warranty).
+    status: pending
+    target_sprint: Sprint 2
 
   - id: ST-004
     capability: CAP-2

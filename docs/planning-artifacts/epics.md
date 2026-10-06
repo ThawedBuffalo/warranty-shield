@@ -71,15 +71,15 @@ inputDocuments:
 
 ## Epics List
 
-| Epic ID | Title | Description | Stories |
-|---------|-------|-------------|---------|
-| EP-1 | Account & Authentication | User registration, login, password recovery, OAuth (Google/Apple), account management | ST-010 |
-| EP-2 | Warranty Entry | Fast manual warranty entry form, data model, expiration calculation, edit capability | ST-001, ST-002 |
-| EP-3 | Dashboard & Views | Color-coded dashboard, warranty detail view, summary bar, progress bar | ST-005, ST-006 |
-| EP-4 | Notifications | Smart expiration notification engine (push + email), notification preferences UI | ST-003, ST-004 |
-| EP-5 | Email Parsing | Email permission flow, purchase confirmation parser, draft review & confirmation | ST-007, ST-008 |
-| EP-6 | Document Management | File attachment (PDF/images), cloud storage, searchable access, thumbnails | ST-009 |
-| EP-7 | Account & Sync | Multi-device login, real-time cloud sync, offline queue | ST-010, ST-011 |
+| Epic ID | Title | Description | Stories | Sprint 1 Status |
+|---------|-------|-------------|---------|----------------|
+| EP-1 | Account & Authentication | User registration, login, password recovery, OAuth (Google/Apple), account management | ST-010 | Included in Sprint 1 (via EP-7) |
+| EP-2 | Warranty Entry | Fast manual warranty entry form, data model, expiration calculation, edit capability | ST-001, ST-002 | ✅ ST-001, ST-002 COMPLETED |
+| EP-3 | Dashboard & Views | Color-coded dashboard, warranty detail view, summary bar, progress bar | ST-005, ST-006 | Pending (Sprint 2) |
+| EP-4 | Notifications | Smart expiration notification engine (push + email), notification preferences UI | ST-003, ST-004 | Pending (Sprint 2) |
+| EP-5 | Email Parsing | Email permission flow, purchase confirmation parser, draft review & confirmation | ST-007, ST-008 | Pending (Sprint 3) |
+| EP-6 | Document Management | File attachment (PDF/images), cloud storage, searchable access, thumbnails | ST-009 | Pending (Sprint 3) |
+| EP-7 | Account & Sync | Multi-device login, real-time cloud sync, offline queue | ST-010, ST-011 | ✅ ST-011 COMPLETED |
 
 ## Stories
 
@@ -144,7 +144,7 @@ As a user who forgot my password, I want to reset it via a magic link sent to my
 ## Epic 2: Warranty Entry
 Users can quickly add, edit, and manage warranty entries with automatic expiration calculation.
 
-### Story 2.1: Manual Warranty Entry Form
+### Story 2.1: Manual Warranty Entry Form ✅ (COMPLETED - Sprint 1)
 As a user, I want to create a warranty entry through a fast, mobile-optimized form, so that I can capture warranty information in under 30 seconds.
 
 **Acceptance Criteria:**
@@ -160,8 +160,11 @@ As a user, I want to create a warranty entry through a fast, mobile-optimized fo
 **Given** I am on a mobile device, **When** I complete a warranty entry, **Then** the entire flow (from form open to save confirmation) takes under 30 seconds on a real device.
 
 **FRs:** FR-1, FR-2 | **NFRs:** NFR-2, NFR-8
+**Status:** ✅ COMPLETED (2026-10-05)
+**Sprint:** Sprint 1
+**Implementation Notes:** Flutter form with Riverpod state, Hive local persistence, Dio API client, validation with error messages, keyboard-optimized for mobile.
 
-### Story 2.2: Warranty Data Model & Expiration Calculation
+### Story 2.2: Warranty Data Model & Expiration Calculation ✅ (COMPLETED - Sprint 1)
 As a user, I want the system to automatically calculate my warranty expiration date, so that I always know when coverage ends without manual math.
 
 **Acceptance Criteria:**
@@ -177,6 +180,9 @@ As a user, I want the system to automatically calculate my warranty expiration d
 **Given** I edited a warranty's purchase date, **When** I save the change, **Then** the expiration date is recalculated automatically.
 
 **FRs:** FR-2 | **NFRs:** N/A (covered under NFR-8)
+**Status:** ✅ COMPLETED (2026-10-05)
+**Sprint:** Sprint 1
+**Implementation Notes:** Spring Boot REST API with PostgreSQL, JPA entities, automatic expiration calculation on persist, CRUD endpoints, query methods for retailer/expiration/product.
 
 ### Story 2.3: Edit Existing Warranty
 As a user, I want to edit an existing warranty entry, so that I can correct information or update details (e.g., if I forgot to add a receipt attachment).
@@ -362,7 +368,7 @@ As a user, I want to attach files to my warranty entries, so that I have all my 
 ## Epic 7: Account & Cloud Sync
 Users have seamless access to all their data across devices with real-time synchronization.
 
-### Story 7.1: Multi-Device Access
+### Story 7.1: Multi-Device Access ✅ (COMPLETED - Sprint 1)
 As a user, I want to log in from any device and see all my warranties, settings, and attachments, so that I can switch devices without losing data.
 
 **Acceptance Criteria:**
@@ -372,6 +378,11 @@ As a user, I want to log in from any device and see all my warranties, settings,
 **Given** I am logged in on Device A, **When** I log in on Device B, **Then** both sessions remain active (no forced logout on the original device).
 
 **Given** I am logged in, **When** I tap "Log Out," **Then** my session is terminated on this device, but my data remains in the cloud for future logins.
+
+**FRs:** FR-7 | **NFRs:** NFR-1, NFR-4, NFR-5
+**Status:** ✅ COMPLETED (2026-10-05)
+**Sprint:** Sprint 1
+**Implementation Notes:** Spring Boot REST API with JWT authentication, Firebase Auth (email/password + Google OAuth), session management with token refresh, multi-device support with concurrent sessions.
 
 **Given** I am on a device with no internet connection, **When** I open the app, **Then** I see: "No internet connection. Your last synced data is available offline." (If offline access is implemented in Phase 2, this message changes.)
 
