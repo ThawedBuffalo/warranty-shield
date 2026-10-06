@@ -397,6 +397,29 @@ As a user, I want my warranty data, settings, and attachments to sync across dev
 **FRs:** FR-16 | **NFRs:** NFR-6
 
 
+## Architecture Mapping
+
+Each epic maps to the Architecture Decisions (ADs) from `../../architecture/ARCHITECTURE-SPINE.md` that govern its implementation:
+
+| Epic | Maps To ADs | Rationale |
+|------|-------------|-----------|
+| Epic 1: Account & Authentication | AD-5 (Hybrid Auth), AD-6 (Firebase override) | User registration, login, OAuth via Firebase, session management via Java backend |
+| Epic 2: Warranty Entry | AD-1 (Riverpod state), AD-2 (Hive persistence), AD-4 (Spring Boot REST) | Fast data entry form, validation, save to backend |
+| Epic 3: Dashboard & Views | AD-1 (Riverpod state), AD-4 (Spring Boot REST) | Color-coded dashboard, urgency sorting, summary bar |
+| Epic 4: Notifications | AD-8 (Push infra), AD-4 (Spring Boot REST) | Java backend manages device tokens, sends pushes, email service |
+| Epic 5: Email Import | AD-9 (Client-side parsing) | Flutter parses emails locally, sends structured data to backend |
+| Epic 6: Document Management | AD-7 (Firebase Storage), AD-4 (Spring Boot REST) | Direct Flutter-to-Firebase uploads, backend stores metadata only |
+| Epic 7: Account & Cloud Sync | AD-10 (Push-triggered sync), AD-11 (LWW conflict), AD-12 (Offline queue) | Java backend push → Flutter fetch, last-write-wins, Hive offline queue |
+
+## Cross-Cutting Concerns
+
+| Concern | Maps To ADs | Notes |
+|---------|-------------|-------|
+| Offline-first design | AD-2, AD-12 | Hive local persistence + offline queue strategy |
+| Multi-device consistency | AD-10, AD-11 | Push-triggered sync + last-write-wins |
+| Privacy (email parsing) | AD-9 | Raw emails never leave the device |
+| Security (auth) | AD-5, AD-6 | Hybrid auth with JWT session tokens |
+| Performance (30s entry, 1min push) | AD-4, AD-8 | Spring Boot REST + Java backend push service |
 
 
 

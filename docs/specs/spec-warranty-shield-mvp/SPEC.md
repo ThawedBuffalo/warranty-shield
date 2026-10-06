@@ -3,6 +3,7 @@ id: SPEC-warranty-shield-mvp
 companions:
   - ../planning-artifacts/briefs/brief-warranty-tracker-2026-10-05/brief.md
   - ../brainstorming/brainstorm-intent.md
+  - ../../architecture/ARCHITECTURE-SPINE.md
 sources: []
 ---
 
