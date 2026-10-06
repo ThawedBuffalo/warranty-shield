@@ -1,0 +1,30 @@
+# Build outputs
+backend/target/
+mobile/build/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Flutter
+*.pid
+*.seed
+*.lastBuildCache
+*.specCache
+
+# Java
+*.log
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# Environment
+.env
+.env.*
+!.env.example
